@@ -2,6 +2,20 @@ import random
 
 class Game:
 
+    """
+    This class represents a single game of Yatzy. The public interface
+    is as follows (other methods just used internally):
+
+    rollDice
+    registerRound
+    getScore
+    isFinished
+    possibleMoves
+    possibleMovesNumeric
+    numericMoveToStr
+    regiserRoundNumeric
+    """
+
     def __init__(self, forcedMode=True):
         """
         Construct a new Game object
@@ -61,27 +75,6 @@ class Game:
         Returns whether or not the game is finished
         """
         return self.finished
-        
-    def updateScores(self):
-        """
-        Updates the scoreboard.
-        Internal method (should be private)
-        """
-        s = 0
-        if self.forcedMode:
-            lim = 41
-        else:
-            lim = 63
-        for score in self.table:
-            if type(self.table[score]) == int and score in self.enumList[0:6]:
-                s += self.table[score]
-        if s >= lim:
-            self.bonus = 50
-            s += 50
-        for score in self.table:
-            if type(self.table[score]) == int and score not in self.enumList[0:6]:
-                s += self.table[score]
-        self.score = s
 
     def possibleMoves(self):
         """
@@ -120,6 +113,27 @@ class Game:
         :param num: the numeric representation of the selected move
         """
         self.registerRound(dice, self.numericMoveToStr(num))
+    
+    def updateScores(self):
+        """
+        Updates the scoreboard.
+        Internal method (should be private)
+        """
+        s = 0
+        if self.forcedMode:
+            lim = 41
+        else:
+            lim = 63
+        for score in self.table:
+            if type(self.table[score]) == int and score in self.enumList[0:6]:
+                s += self.table[score]
+        if s >= lim:
+            self.bonus = 50
+            s += 50
+        for score in self.table:
+            if type(self.table[score]) == int and score not in self.enumList[0:6]:
+                s += self.table[score]
+        self.score = s
 
     def simples(self, dice, val):
         """
